@@ -1,6 +1,11 @@
 const express = require('express'),
-    router = express.Router();
-
+    router = express.Router(),
+    User = require('../../models/User'),
+    Profile = require('../../models/profile'),
+    bcrypt = require('bcryptjs'),
+    jwt = require('jsonwebtoken'),
+    keys = require('../../config/keys'),
+    passport = require('passport');
 
 
 

@@ -9,16 +9,23 @@ const express = require('express'),
     post = require('./routes/api/post');
 const PORT = process.env.PORT || 3000;
 
+//Use Body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 //DB config
 const db = require('./config/keys').mongoURI;
 
 //Connect to mongo
-mongoose.connect(db)
+mongoose.connect(db,{ useNewUrlParser: true })
     .then(success => console.log('Connected to Db'))
     .catch(err => console.log(err));
-app.get('/', (req, res) => {
-    res.status(200).send('This is home page.')
-})
+
+//Passport Middleware
+app.use(passport.initialize());
+
+//Passport Config
+require('./config/passport.js')(passport);
 
 app.use('/api/users', user);
 app.use('/api/profile', profile)
